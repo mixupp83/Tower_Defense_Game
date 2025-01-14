@@ -4,6 +4,7 @@ from settings import Settings
 from level import Level
 from grid import Grid
 
+
 class TowerDefenseGame:
     def __init__(self):
         pygame.init()
@@ -60,7 +61,7 @@ class TowerDefenseGame:
     def _draw_win_screen(self):
         win_text = "You Win!"
         win_render = self.font.render(win_text, True, (255, 215, 0))
-        win_rect = win_render.get_rect(center=(self.settings.screen_width/2, self.settings.screen_height/2))
+        win_rect = win_render.get_rect(center=(self.settings.screen_width / 2, self.settings.screen_height / 2))
         self.screen.blit(win_render, win_rect)
 
     def _draw_game_over_screen(self):
@@ -68,7 +69,8 @@ class TowerDefenseGame:
 
         game_over_text = "Game Over!"
         game_over_render = self.font.render(game_over_text, True, (255, 0, 0))
-        game_over_rect = game_over_render.get_rect(center=(self.settings.screen_width / 2, self.settings.screen_height / 2))
+        game_over_rect = game_over_render.get_rect(
+            center=(self.settings.screen_width / 2, self.settings.screen_height / 2))
 
         self.screen.blit(game_over_render, game_over_rect)
 
@@ -108,6 +110,7 @@ class TowerDefenseGame:
 
             self._draw()
             self.clock.tick(60)
+
 
 if __name__ == '__main__':
     td_game = TowerDefenseGame()
