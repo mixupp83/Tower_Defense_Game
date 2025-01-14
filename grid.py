@@ -1,6 +1,5 @@
 import pygame
 
-
 class Grid:
     def __init__(self, game):
         self.game = game
@@ -8,13 +7,15 @@ class Grid:
         self.screen = game.screen
         self.available_spots = self.settings.tower_positions
         self.towers = []
+        self.show_spots = False  # Флаг для отображения позиций башен
 
     def update(self):
         pass
 
     def draw(self):
-        for spot in self.available_spots:
-            pygame.draw.circle(self.screen, (0, 255, 0), spot, 15, 2)
+        if self.show_spots:  # Отображаем позиции только если флаг активен
+            for spot in self.available_spots:
+                pygame.draw.circle(self.screen, (0, 255, 0), spot, 15, 2)
 
     def place_tower(self, tower=None):
         grid_pos = self.get_grid_position(tower.position)

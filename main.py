@@ -25,7 +25,6 @@ class TowerDefenseGame:
         self.selected_tower_type = 'basic'
         self.is_game_over = False
 
-
     def game_over(self):
         self.is_game_over = True
 
@@ -45,6 +44,8 @@ class TowerDefenseGame:
                 elif event.key == pygame.K_2:
                     self.selected_tower_type = 'sniper'
                     print("Selected sniper tower.")
+                elif event.key == pygame.K_SPACE:  # Обработка нажатия пробела
+                    self.grid.show_spots = not self.grid.show_spots  # Переключаем флаг
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.selected_tower_type:
                     mouse_pos = pygame.mouse.get_pos()
@@ -107,7 +108,6 @@ class TowerDefenseGame:
 
             self._draw()
             self.clock.tick(60)
-
 
 if __name__ == '__main__':
     td_game = TowerDefenseGame()
