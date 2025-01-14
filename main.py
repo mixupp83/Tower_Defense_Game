@@ -25,6 +25,7 @@ class TowerDefenseGame:
         self.selected_tower_type = 'basic'
         self.is_game_over = False
 
+
     def game_over(self):
         self.is_game_over = True
 
