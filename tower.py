@@ -25,7 +25,7 @@ class Tower(pygame.sprite.Sprite):
         mouse_pos = pygame.mouse.get_pos()
         if self.is_hovered(mouse_pos):
             level_text = self.game.font.render(f"Level: {self.level}", True, (255, 255, 255))
-            upgrade_cost_text = self.game.font.render(f"Upgrade: ${self.upgrade_cost()  }", True, (255, 255, 255))
+            upgrade_cost_text = self.game.font.render(f"Upgrade: ${self.upgrade_cost()}", True, (255, 255, 255))
 
             level_text_pos = (self.position.x, self.position.y + 20)
             upgrade_cost_pos = (self.position.x, self.position.y + 40)
@@ -50,9 +50,7 @@ class Tower(pygame.sprite.Sprite):
     def rotate_towards_target(self, target):
         dx = target.position.x - self.position.x
         dy = target.position.y - self.position.y
-        # Вычисляем угол в радианах
         angle_rad = math.atan2(dy, dx)
-        # Преобразуем радианы в градусы
         angle_deg = math.degrees(angle_rad)
         angle_deg = -angle_deg - 90
         self.image = pygame.transform.rotate(self.original_image, angle_deg)
@@ -85,6 +83,7 @@ class BasicTower(Tower):
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game)
         bullets_group.add(new_bullet)
+        self.game.shoot_sound.play()  # Воспроизведение звука выстрела
 
 
 class SniperTower(Tower):
@@ -110,3 +109,4 @@ class SniperTower(Tower):
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game)
         bullets_group.add(new_bullet)
+        self.game.shoot_sound.play()  # Воспроизведение звука выстрела

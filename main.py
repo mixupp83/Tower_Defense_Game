@@ -22,7 +22,7 @@ class TowerDefenseGame:
 
         self.font = pygame.font.SysFont("Arial", 24)
 
-        self.shoot_sound = pygame.mixer.Sound(self.settings.shoot_sound)
+        self.shoot_sound = pygame.mixer.Sound('assets/sounds/shoot.wav')  # Звук выстрела
         self.selected_tower_type = 'basic'
         self.is_game_over = False
 
@@ -30,7 +30,6 @@ class TowerDefenseGame:
         self.is_game_over = True
 
     def is_position_inside(self, pos):
-        """Check if a given position is inside the game screen boundaries."""
         return 0 <= pos.x <= self.settings.screen_width and 0 <= pos.y <= self.settings.screen_height
 
     def _check_events(self):
@@ -45,8 +44,8 @@ class TowerDefenseGame:
                 elif event.key == pygame.K_2:
                     self.selected_tower_type = 'sniper'
                     print("Selected sniper tower.")
-                elif event.key == pygame.K_SPACE:  # Обработка нажатия пробела
-                    self.grid.show_spots = not self.grid.show_spots  # Переключаем флаг
+                elif event.key == pygame.K_SPACE:
+                    self.grid.show_spots = not self.grid.show_spots
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.selected_tower_type:
                     mouse_pos = pygame.mouse.get_pos()
