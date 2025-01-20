@@ -22,7 +22,7 @@ class TowerDefenseGame:
 
         self.font = pygame.font.SysFont("Arial", 24)
 
-        self.shoot_sound = pygame.mixer.Sound('assets/sounds/shoot.wav')  # Звук выстрела
+        self.shoot_sound = pygame.mixer.Sound('assets/sounds/shoot.wav')
         self.selected_tower_type = 'basic'
         self.is_game_over = False
 
@@ -44,6 +44,9 @@ class TowerDefenseGame:
                 elif event.key == pygame.K_2:
                     self.selected_tower_type = 'sniper'
                     print("Selected sniper tower.")
+                elif event.key == pygame.K_3:  # Новая башня
+                    self.selected_tower_type = 'money'
+                    print("Selected money tower.")
                 elif event.key == pygame.K_SPACE:
                     self.grid.show_spots = not self.grid.show_spots
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

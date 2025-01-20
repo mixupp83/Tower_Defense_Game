@@ -20,6 +20,7 @@ class Settings:
         self.tower_sprites = {
             'basic': 'assets/towers/basic_tower.png',
             'sniper': 'assets/towers/sniper_tower.png',
+            'money': 'assets/towers/towerDefense_tile203.png',  # Добавлен путь к изображению башни
         }
         self.enemy_sprite = 'assets/enemies/basic_enemy.png'
         self.bullet_sprite = 'assets/bullets/basic_bullet.png'

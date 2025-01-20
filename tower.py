@@ -83,7 +83,7 @@ class BasicTower(Tower):
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game)
         bullets_group.add(new_bullet)
-        self.game.shoot_sound.play()  # Воспроизведение звука выстрела
+        self.game.shoot_sound.play()
 
 
 class SniperTower(Tower):
@@ -109,4 +109,22 @@ class SniperTower(Tower):
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game)
         bullets_group.add(new_bullet)
-        self.game.shoot_sound.play()  # Воспроизведение звука выстрела
+        self.game.shoot_sound.play()
+
+
+class MoneyTower(Tower):
+    def __init__(self, position, game):
+        super().__init__(position, game)
+        self.image = pygame.image.load('assets/towers/towerDefense_tile203.png').convert_alpha()  # Добавьте изображение для денежной башни
+        self.original_image = self.image
+        self.rect = self.image.get_rect(center=self.position)
+        self.money_generation_rate = 50  # Количество денег, генерируемых каждые N секунд
+        self.money_generation_interval = 5000  # Интервал генерации денег в миллисекундах (5 секунд)
+        self.last_money_generation_time = pygame.time.get_ticks()
+
+    def update(self, enemies, current_time, bullets_group):
+        # Генерация денег
+        if current_time - self.last_money_generation_time > self.money_generation_interval:
+            self.game.settings.starting_money += self.money_generation_rate
+            self.last_money_generation_time = current_time
+            print(f"Money generated! Current money: {self.game.settings.starting_money}")
