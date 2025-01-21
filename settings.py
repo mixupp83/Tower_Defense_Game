@@ -1,3 +1,5 @@
+import random
+
 class Settings:
     def __init__(self):
         self.screen_width = 1200
@@ -12,15 +14,29 @@ class Settings:
         self.tower_upgrade_cost = 150
         self.tower_sell_percentage = 0.75
 
-        self.enemy_path = [
-            (50, 400), (300, 400), (300, 200), (600, 200),
-            (600, 600), (900, 600), (900, 300), (1150, 300)
+        # Несколько путей для врагов
+        self.enemy_paths = [
+            [
+                (50, 400), (300, 400), (300, 200), (600, 200),
+                (600, 600), (900, 600), (900, 300), (1150, 300)
+            ],
+            [
+                (50, 200), (300, 200), (300, 600), (600, 600),
+                (600, 200), (900, 200), (900, 400), (1150, 400)
+            ],
+            [
+                (50, 600), (300, 600), (300, 400), (600, 400),
+                (600, 200), (900, 200), (900, 600), (1150, 600)
+            ]
         ]
+
+        # Случайный выбор пути при запуске игры
+        self.enemy_path = random.choice(self.enemy_paths)
 
         self.tower_sprites = {
             'basic': 'assets/towers/basic_tower.png',
             'sniper': 'assets/towers/sniper_tower.png',
-            'money': 'assets/towers/towerDefense_tile203.png',  # Добавлен путь к изображению башни
+            'money': 'assets/towers/money_tower.png',
         }
         self.enemy_sprite = 'assets/enemies/basic_enemy.png'
         self.bullet_sprite = 'assets/bullets/basic_bullet.png'
@@ -35,5 +51,6 @@ class Settings:
         self.starting_money = 500
         self.lives = 20
 
-        self.tower_positions = [(x * self.grid_size[0] + self.grid_size[0] // 2, y * self.grid_size[1] + self.grid_size[1] // 2)
-                                for x in range(1, self.cols) for y in range(3, self.rows)]
+        self.tower_positions = [
+            (x * self.grid_size[0] + self.grid_size[0] // 2, y * self.grid_size[1] + self.grid_size[1] // 2) for x in
+            range(1, self.cols) for y in range(3, self.rows)]
