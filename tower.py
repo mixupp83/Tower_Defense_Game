@@ -2,7 +2,6 @@ import pygame
 from bullet import Bullet
 import math
 
-
 class Tower(pygame.sprite.Sprite):
     def __init__(self, position, game):
         super().__init__()
@@ -15,11 +14,23 @@ class Tower(pygame.sprite.Sprite):
         self.damage = 0
         self.rate_of_fire = 0
         self.last_shot_time = pygame.time.get_ticks()
-        self.level = 1
+        self.level = 1  # Уровень башни
         self.original_image = self.image
 
     def upgrade_cost(self):
-        return 100 * self.level
+        # Стоимость улучшения: 50 * текущий уровень башни
+        return 50 * self.level
+
+    def upgrade(self):
+        # Улучшение башни: увеличение урона и скорострельности на 20%
+        if self.game.settings.starting_money >= self.upgrade_cost():
+            self.game.settings.starting_money -= self.upgrade_cost()
+            self.level += 1
+            self.damage = int(self.damage * 1.2)  # Увеличение урона на 20%
+            self.rate_of_fire = int(self.rate_of_fire * 0.8)  # Уменьшение задержки между выстрелами на 20%
+            print(f"Tower upgraded to level {self.level}. Damage: {self.damage}, Rate of Fire: {self.rate_of_fire}ms")
+        else:
+            print("Not enough money to upgrade the tower.")
 
     def draw(self, screen):
         mouse_pos = pygame.mouse.get_pos()
@@ -66,10 +77,6 @@ class Tower(pygame.sprite.Sprite):
                 min_distance = distance
         return nearest_enemy
 
-    def upgrade(self):
-        self.level += 1
-
-
 class BasicTower(Tower):
     def __init__(self, position, game):
         super().__init__(position, game)
@@ -78,13 +85,12 @@ class BasicTower(Tower):
         self.rect = self.image.get_rect(center=self.position)
         self.tower_range = 150
         self.damage = 20
-        self.rate_of_fire = 1000
+        self.rate_of_fire = 1000  # Задержка между выстрелами в миллисекундах
 
     def shoot(self, target, bullets_group):
         new_bullet = Bullet(self.position, target.position, self.damage, self.game)
         bullets_group.add(new_bullet)
         self.game.shoot_sound.play()
-
 
 class SniperTower(Tower):
     def __init__(self, position, game):
@@ -95,7 +101,7 @@ class SniperTower(Tower):
         self.rect = self.image.get_rect(center=self.position)
         self.tower_range = 300
         self.damage = 40
-        self.rate_of_fire = 2000
+        self.rate_of_fire = 2000  # Задержка между выстрелами в миллисекундах
 
     def find_target(self, enemies):
         healthiest_enemy = None
@@ -111,11 +117,10 @@ class SniperTower(Tower):
         bullets_group.add(new_bullet)
         self.game.shoot_sound.play()
 
-
 class MoneyTower(Tower):
     def __init__(self, position, game):
         super().__init__(position, game)
-        self.image = pygame.image.load('assets/towers/towerDefense_tile203.png').convert_alpha()  # Добавьте изображение для денежной башни
+        self.image = pygame.image.load('assets/towers/towerDefense_tile203.png').convert_alpha()
         self.original_image = self.image
         self.rect = self.image.get_rect(center=self.position)
         self.money_generation_rate = 50  # Количество денег, генерируемых каждые N секунд

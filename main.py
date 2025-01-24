@@ -4,7 +4,6 @@ from settings import Settings
 from level import Level
 from grid import Grid
 
-
 class TowerDefenseGame:
     def __init__(self):
         pygame.init()
@@ -44,11 +43,16 @@ class TowerDefenseGame:
                 elif event.key == pygame.K_2:
                     self.selected_tower_type = 'sniper'
                     print("Selected sniper tower.")
-                elif event.key == pygame.K_3:  # Новая башня
+                elif event.key == pygame.K_3:
                     self.selected_tower_type = 'money'
                     print("Selected money tower.")
                 elif event.key == pygame.K_SPACE:
                     self.grid.show_spots = not self.grid.show_spots
+                elif event.key == pygame.K_u:  # Улучшение башни
+                    mouse_pos = pygame.mouse.get_pos()
+                    for tower in self.level.towers:
+                        if tower.rect.collidepoint(mouse_pos):
+                            tower.upgrade()
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.selected_tower_type:
                     mouse_pos = pygame.mouse.get_pos()
@@ -112,7 +116,6 @@ class TowerDefenseGame:
 
             self._draw()
             self.clock.tick(60)
-
 
 if __name__ == '__main__':
     td_game = TowerDefenseGame()
